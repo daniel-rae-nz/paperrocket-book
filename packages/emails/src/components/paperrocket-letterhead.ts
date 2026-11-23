@@ -39,3 +39,9 @@ export const getFooterLines = (): string[] =>
     .filter(Boolean);
 export const getFooterName = (): string => COMPANY_NAME;
 export const getHomeUrl = (): string => WEBSITE_URL || WEBAPP_URL;
+
+/** Footer lines that are not already shown as the bold name or the company line (PAP-1534: "Paper Rocket" showed twice). */
+export const dedupeFooterLines = (lines: string[], shown: string[]): string[] => {
+  const seen = new Set(shown.map((s) => s.trim().toLowerCase()));
+  return lines.filter((line) => !seen.has(line.trim().toLowerCase()));
+};

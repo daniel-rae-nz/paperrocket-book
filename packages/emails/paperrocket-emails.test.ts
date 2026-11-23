@@ -134,6 +134,15 @@ describe("paperrocket-book wording", () => {
   });
 });
 
+describe("paperrocket-book footer name once (PAP-1534)", () => {
+  it("drops footer lines that repeat the name already shown", async () => {
+    const { dedupeFooterLines } = await import("./src/components/paperrocket-letterhead");
+    expect(
+      dedupeFooterLines(["Paper Rocket", "1 Example Street, Wanaka", "paper rocket "], ["Paper Rocket", "Test Company Ltd"])
+    ).toEqual(["1 Example Street, Wanaka"]);
+  });
+});
+
 describe("paperrocket-book footer and NZ dates (PAP-1492)", () => {
   it("keeps the footer when hideLogo is set (platform client or hideBranding)", async () => {
     for (const flag of [{ hideBranding: true }, { platformClientId: "client-1" }]) {
