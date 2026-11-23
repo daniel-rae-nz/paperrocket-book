@@ -78,7 +78,7 @@ describe("paperrocket-book emails", () => {
     vi.stubEnv("NEXT_PUBLIC_WEBSITE_URL", "https://www.example.test");
     vi.stubEnv("PR_EMAIL_BRAND_COLOR", "#0A7C66");
     vi.stubEnv("PR_EMAIL_NAME", "Test Booking");
-    vi.stubEnv("PR_EMAIL_FOOTER_LINES", "1 Example Street, Wanaka | 03 555 0100");
+    vi.stubEnv("PR_EMAIL_FOOTER_LINES", "1 Example Street, Wānaka | 03 555 0100");
     vi.stubEnv("NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS", "hello@example.test");
     vi.resetModules();
     render = (await import("./src/renderEmail")).default as unknown as Render;
@@ -100,7 +100,7 @@ describe("paperrocket-book emails", () => {
       expect(html).not.toContain("Cal.diy");
       expect(html).not.toContain("Cal Video");
       expect(html.toLowerCase()).not.toContain("cal.com");
-      expect(html).toContain("1 Example Street, Wanaka"); // footer lines
+      expect(html).toContain("1 Example Street, Wānaka"); // footer lines
       expect(html).not.toContain("Organizer"); // NZ spelling
       expect(html).not.toContain("—"); // no em dash
       expect(html.length).toBeLessThan(80_000); // Gmail clips at about 102 KB
@@ -138,8 +138,8 @@ describe("paperrocket-book footer name once (PAP-1534)", () => {
   it("drops footer lines that repeat the name already shown", async () => {
     const { dedupeFooterLines } = await import("./src/components/paperrocket-letterhead");
     expect(
-      dedupeFooterLines(["Paper Rocket", "1 Example Street, Wanaka", "paper rocket "], ["Paper Rocket", "Test Company Ltd"])
-    ).toEqual(["1 Example Street, Wanaka"]);
+      dedupeFooterLines(["Paper Rocket", "1 Example Street, Wānaka", "paper rocket "], ["Paper Rocket", "Test Company Ltd"])
+    ).toEqual(["1 Example Street, Wānaka"]);
   });
 });
 
@@ -151,7 +151,7 @@ describe("paperrocket-book footer and NZ dates (PAP-1492)", () => {
         attendee: maria,
       });
       expect(html).toContain("Test Company Ltd");
-      expect(html).toContain("1 Example Street, Wanaka");
+      expect(html).toContain("1 Example Street, Wānaka");
       expect(html).toContain("Questions? Reply to this email.");
     }
   });
