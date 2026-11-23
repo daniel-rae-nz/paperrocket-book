@@ -7,6 +7,7 @@ import type { BodyHeadType } from "./EmailSchedulingBodyHeader";
 import RawHtml from "./RawHtml";
 import {
   getBrandColour,
+  dedupeFooterLines,
   getFooterLines,
   getFooterName,
   getHomeUrl,
@@ -77,7 +78,7 @@ export const BaseEmailHtml = (props: {
   hideLogo?: boolean;
 }) => {
   const brand = getBrandColour();
-  const footerLines = getFooterLines();
+  const footerLines = dedupeFooterLines(getFooterLines(), [getLetterheadName(), getFooterName()]);
   const home = getHomeUrl();
   return (
     <Html>
@@ -197,7 +198,7 @@ export const BaseEmailHtml = (props: {
                     <div style={{ fontSize: 13, fontWeight: 600, color: PR_COLOURS.ink }}>
                       {getLetterheadName()}
                     </div>
-                    <div>{getFooterName()}</div>
+                    {getFooterName().trim().toLowerCase() !== getLetterheadName().trim().toLowerCase() && <div>{getFooterName()}</div>}
                     {footerLines.map((line) => (
                       <div key={line}>{line}</div>
                     ))}
